@@ -437,22 +437,28 @@
   .photo-card{
     position:relative;
     overflow:hidden;
-    min-height:270px;
+    min-height:200px;
     background:var(--paper-deep);
     border:1px solid var(--line);
     text-decoration:none;
     color:var(--paper);
   }
-  .photo-card:nth-child(1){grid-column:span 7;}
-  .photo-card:nth-child(2){grid-column:span 5;}
-  .photo-card:nth-child(3){grid-column:span 5;}
-  .photo-card:nth-child(4){grid-column:span 7;}
-  .photo-card:nth-child(5){grid-column:span 4;}
-  .photo-card:nth-child(6){grid-column:span 4;}
-  .photo-card:nth-child(7){grid-column:span 4;}
+  .photo-card:nth-child(12n+1){grid-column:span 5;}
+  .photo-card:nth-child(12n+2){grid-column:span 4;}
+  .photo-card:nth-child(12n+3){grid-column:span 3;}
+  .photo-card:nth-child(12n+4){grid-column:span 3;}
+  .photo-card:nth-child(12n+5){grid-column:span 5;}
+  .photo-card:nth-child(12n+6){grid-column:span 4;}
+  .photo-card:nth-child(12n+7){grid-column:span 4;}
+  .photo-card:nth-child(12n+8){grid-column:span 3;}
+  .photo-card:nth-child(12n+9){grid-column:span 5;}
+  .photo-card:nth-child(12n+10){grid-column:span 6;}
+  .photo-card:nth-child(12n+11){grid-column:span 6;}
+  .photo-card:nth-child(12n+12){grid-column:span 12;}
+  
 
   .photo-card img{
-    width:100%; height:100%; min-height:270px;
+    width:100%; height:100%; min-height:200px;
     display:block; object-fit:cover;
     filter:saturate(.92);
     transition:transform .6s cubic-bezier(.2,.7,.2,1), filter .4s ease;
@@ -886,7 +892,7 @@
 
 <header>
   <div class="nav wrap">
-    <a href="#" class="brand" style="display:flex; align-items:center; gap:10px;"><img src="assets/Tramobler_azl.png" alt="Tramobler" style="height:44px; width:auto; padding-top:4px;"></a>
+    <a href="index.html#inicio" class="brand" style="text-decoration:none; font-family:'Archivo Expanded',sans-serif; font-size:24px; font-weight:800; color:var(--ink); letter-spacing:0.02em;">TRAM<span style="color:var(--blueprint);">Ö</span>BLER</a>
 
     <nav class="main-nav" aria-label="Navegación principal">
       <ul>
@@ -991,7 +997,7 @@
     <div class="manifesto-text">
       <h2>El detalle que sostiene una idea, aunque sea por unos días.</h2>
       <div class="col">
-        <p>En Tramöbler diseñamos como arquitectos y construimos como constructores: cada stand, escenografía u oficina nace de un plano técnico, no de una idea suelta. Materiales reales, uniones resueltas, acabados cuidados hasta el último tornillo.</p>
+        <p>En Tramöbler diseñamos como arquitectos y construimos como ingenieros: cada stand, escenografía u oficina nace de un plano técnico, no de una idea suelta. Materiales reales, uniones resueltas, acabados cuidados hasta el último tornillo.</p>
         <p>Trabajamos ferias como SOFA, EXPO 2R y EXPOPET en Corferias, y espacios comerciales y corporativos donde la marca necesita un lugar construido con la misma exigencia que un edificio permanente — aunque su vida útil se mida en días.</p>
       </div>
     </div>
@@ -1039,71 +1045,129 @@
 
     <div class="photo-grid">
         <a href="#" class="photo-card">
-          <img src="assets/SIMONIZ_EXPOLG_24.png" alt="Simoniz Expolg">
+          <img src="assets/BINNER.M_EXPOPET_25.png" alt="Binner.M Expopet 25">
           <div class="photo-caption">
-            <small>01 / Experiencia de Marca</small>
-            <strong>Simoniz Expolg 2024</strong>
+            <small>01 / Proyecto</small>
+            <strong>Binner.M Expopet 25</strong>
           </div>
         </a>
         <a href="#" class="photo-card">
-          <img src="assets/BINNER_F.HOGAR_24.png" alt="Binner Feria Hogar">
+          <img src="assets/BINNER_F.HOGAR_24.png" alt="Binner F.Hogar 24">
           <div class="photo-caption">
-            <small>02 / Stand Comercial</small>
-            <strong>Binner Feria del Hogar 2024</strong>
+            <small>02 / Proyecto</small>
+            <strong>Binner F.Hogar 24</strong>
           </div>
         </a>
         <a href="#" class="photo-card">
-          <img src="assets/FISIOMAX_EXHIBI_25.png" alt="Fisiomax Exhibicion">
+          <img src="assets/BINNER_NEG_25.png" alt="Binner Neg 25">
           <div class="photo-caption">
-            <small>03 / Espacios</small>
-            <strong>Fisiomax Exhibicion 2025</strong>
+            <small>03 / Proyecto</small>
+            <strong>Binner Neg 25</strong>
           </div>
         </a>
         <a href="#" class="photo-card">
-          <img src="assets/CAUPLAS-MED-24.png" alt="Cauplas Med">
+          <img src="assets/CAUPLAS-MED-24.png" alt="Cauplas-Med-24">
           <div class="photo-caption">
-            <small>04 / Diseño Arquitectonico</small>
-            <strong>Cauplas Med 2024</strong>
+            <small>04 / Proyecto</small>
+            <strong>Cauplas-Med-24</strong>
           </div>
         </a>
         <a href="#" class="photo-card">
-          <img src="assets/i2GO_EXHIBI_24.png" alt="i2GO Exhibicion">
+          <img src="assets/FISIOMAX_EXHIBI_25.png" alt="Fisiomax Exhibi 25">
           <div class="photo-caption">
-            <small>05 / Retail</small>
-            <strong>i2GO Exhibicion 2024</strong>
+            <small>05 / Proyecto</small>
+            <strong>Fisiomax Exhibi 25</strong>
           </div>
         </a>
         <a href="#" class="photo-card">
-          <img src="assets/IMPOR_DENT_CONGRESO_24.png" alt="Impor Dent">
+          <img src="assets/FISIOMAX_PROD_25.png" alt="Fisiomax Prod 25">
           <div class="photo-caption">
-            <small>06 / Corporativo</small>
-            <strong>Impor Dent Congreso 2024</strong>
+            <small>06 / Proyecto</small>
+            <strong>Fisiomax Prod 25</strong>
           </div>
         </a>
         <a href="#" class="photo-card">
-          <img src="assets/SIMONIZ_EXPO2R_24.png" alt="Simoniz Expo2R">
+          <img src="assets/FLUMICIL_PROD_25.png" alt="Flumicil Prod 25">
           <div class="photo-caption">
-            <small>07 / Stand de Exhibicion</small>
-            <strong>Simoniz Expo2R 2024</strong>
+            <small>07 / Proyecto</small>
+            <strong>Flumicil Prod 25</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/i2GO_EXHIBI_24.png" alt="I2Go Exhibi 24">
+          <div class="photo-caption">
+            <small>08 / Proyecto</small>
+            <strong>I2Go Exhibi 24</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/IMPOR_DENT_CONGRESO_24.png" alt="Impor Dent Congreso 24">
+          <div class="photo-caption">
+            <small>09 / Proyecto</small>
+            <strong>Impor Dent Congreso 24</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/SIMONIZ_EXPO2R_24.png" alt="Simoniz Expo2R 24">
+          <div class="photo-caption">
+            <small>10 / Proyecto</small>
+            <strong>Simoniz Expo2R 24</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/SIMONIZ_EXPOLG_23.png" alt="Simoniz Expolg 23">
+          <div class="photo-caption">
+            <small>11 / Proyecto</small>
+            <strong>Simoniz Expolg 23</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/SIMONIZ_EXPOLG_24.png" alt="Simoniz Expolg 24">
+          <div class="photo-caption">
+            <small>12 / Proyecto</small>
+            <strong>Simoniz Expolg 24</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/SIMONIZ_EXPOLG_25.png" alt="Simoniz Expolg 25">
+          <div class="photo-caption">
+            <small>13 / Proyecto</small>
+            <strong>Simoniz Expolg 25</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/SIMONIZ_F2R_MED_25.png" alt="Simoniz F2R Med 25">
+          <div class="photo-caption">
+            <small>14 / Proyecto</small>
+            <strong>Simoniz F2R Med 25</strong>
+          </div>
+        </a>
+        <a href="#" class="photo-card">
+          <img src="assets/SIMONIZ_NEG_25.png" alt="Simoniz Neg 25">
+          <div class="photo-caption">
+            <small>15 / Proyecto</small>
+            <strong>Simoniz Neg 25</strong>
           </div>
         </a>
       </div>
-    </section>
-
-<section class="clients wrap">
-  <div class="label">MARCAS Y CLIENTES</div>
+    </div>
+  </section>
+<section class="clients wrap" style="padding-bottom: 60px;">
+  <div class="label" style="font-size:12px; color:var(--concrete); margin-bottom:26px;">MARCAS Y CLIENTES</div>
   <div class="client-list">
-    <span><img src="assets/terpel_gt_lg.png" alt="Terpel" style="filter: invert(1) brightness(0.2);"></span>
-    <span><img src="assets/RAUCO_AZ.png" alt="Rauco"></span>
-    <span><img src="assets/LG_GENERAL_NGR.png" alt="LG"></span>
-    <span><img src="assets/CAUPLAS_BLC.png" alt="Cauplas" style="filter: invert(1) brightness(0.2);"></span>
-    <span><img src="assets/BINNER M.png" alt="Binner" style="filter: invert(1) brightness(0.2);"></span>
-    <span><img src="assets/ZAMBON.png" alt="Zambon" style="filter: invert(1) brightness(0.2);"></span>
-    <span><img src="assets/TITAN.png" alt="Titan"></span>
-    <span><img src="assets/BUEN PINTOR.png" alt="Buen Pintor"></span>
+    <span><img src="assets/AO_Logo.png" alt="AO_Logo" style="filter: invert(1) brightness(0.2);"></span>
+    <span><img src="assets/BINNER H.png" alt="BINNER H" style="filter: invert(1) brightness(0.2);"></span>
+    <span><img src="assets/BINNER M.png" alt="BINNER M" style="filter: invert(1) brightness(0.2);"></span>
+    <span><img src="assets/BUEN PINTOR.png" alt="BUEN PINTOR" ></span>
+    <span><img src="assets/CAUPLAS_BLC.png" alt="CAUPLAS_BLC" style="filter: invert(1) brightness(0.2);"></span>
+    <span><img src="assets/IMPORTACIONES.png" alt="IMPORTACIONES" ></span>
+    <span><img src="assets/LG_GENERAL_NGR.png" alt="LG_GENERAL_NGR" ></span>
+    <span><img src="assets/RAUCO_AZ.png" alt="RAUCO_AZ" ></span>
+    <span><img src="assets/terpel_gt_lg.png" alt="terpel_gt_lg" style="filter: invert(1) brightness(0.2);"></span>
+    <span><img src="assets/TITAN.png" alt="TITAN" ></span>
+    <span><img src="assets/ZAMBON.png" alt="ZAMBON" style="filter: invert(1) brightness(0.2);"></span>
   </div>
 </section>
-
 
 <section class="faq" style="padding: 80px 0; background: var(--paper-deep); border-top: 1px solid var(--line);">
   <div class="wrap">
@@ -1115,11 +1179,11 @@
       </div>
       <div style="background:var(--paper); padding:30px; border:1px solid var(--line);">
         <h4 style="font-weight:700; margin-bottom:12px; color:var(--blueprint-deep); font-size:16px;">¿En qué ciudades prestan servicio?</h4>
-        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Operamos principalmente en todos los recintos feriales y espacios comerciales a nivel nacional, con toda la capacidad logística y administrativa para ejecutar proyectos corporativos, industriales y comerciales a nivel internacional.</p>
+        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Operamos principalmente en Bogotá, Corferias, y tenemos capacidad logística para ejecutar proyectos corporativos y comerciales a nivel nacional.</p>
       </div>
       <div style="background:var(--paper); padding:30px; border:1px solid var(--line);">
         <h4 style="font-weight:700; margin-bottom:12px; color:var(--blueprint-deep); font-size:16px;">¿Cuentan con taller de producción propio?</h4>
-        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Absolutamente. Controlamos todo el proceso con nuestro equipamiento: Taller de diseño, producción, ornamentación, Impresión UV de gran formato, plotter de corte, corte láser y carpintería arquitectónica.</p>
+        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Absolutamente. Controlamos todo el proceso con nuestro equipamiento: Impresión UV de gran formato, plotter de corte, corte láser y carpintería arquitectónica.</p>
       </div>
       <div style="background:var(--paper); padding:30px; border:1px solid var(--line);">
         <h4 style="font-weight:700; margin-bottom:12px; color:var(--blueprint-deep); font-size:16px;">¿Cuánto tiempo toma diseñar y construir?</h4>
@@ -1128,7 +1192,6 @@
     </div>
   </div>
 </section>
-
 <section class="contact sheet" id="contacto">
   <div class="sheet-tag" style="color:rgba(237,234,227,.5)">HOJA A—05<br>CONTACTO</div>
   <div class="wrap">
@@ -1207,7 +1270,6 @@
     </form>
   </div>
 </section>
-
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
     <div>© 2026 Tramöbler</div>
@@ -1215,76 +1277,45 @@
   </div>
 </footer>
 
-
+<!-- LIGHTBOX SCRIPT -->
 <script>
-  (() => {
-    const button = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('#mobile-menu');
-    if (!button || !menu) return;
+document.addEventListener('DOMContentLoaded', function() {
+  var cards = document.querySelectorAll('.photo-card');
+  if(cards.length === 0) return;
+  
+  var lightbox = document.createElement('div');
+  lightbox.id = 'tramobler-lightbox';
+  lightbox.style.cssText = 'display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(27,26,23,0.95); align-items:center; justify-content:center; flex-direction:column; padding:20px; cursor:zoom-out; opacity:0; transition:opacity 0.3s ease; backdrop-filter:blur(4px);';
+  
+  lightbox.innerHTML = '<img id="lightbox-img" style="max-width:95%; max-height:85vh; object-fit:contain; box-shadow:0 15px 50px rgba(0,0,0,0.6); border: 2px solid rgba(237,234,227,0.1);">' + 
+                       '<div id="lightbox-cap" style="color:var(--paper); margin-top:20px; font-family:\'Archivo Expanded\',sans-serif; font-size:18px; text-align:center; letter-spacing:0.05em;"></div>';
+  document.body.appendChild(lightbox);
 
-    const closeMenu = () => {
-      button.classList.remove('active');
-      button.setAttribute('aria-expanded', 'false');
-      button.setAttribute('aria-label', 'Abrir menú');
-      menu.classList.remove('open');
-    };
+  var img = lightbox.querySelector('#lightbox-img');
+  var cap = lightbox.querySelector('#lightbox-cap');
 
-    button.addEventListener('click', () => {
-      const open = !menu.classList.contains('open');
-      button.classList.toggle('active', open);
-      button.setAttribute('aria-expanded', String(open));
-      button.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-      menu.classList.toggle('open', open);
+  cards.forEach(function(card) {
+    card.style.cursor = 'zoom-in';
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      var src = card.querySelector('img').src;
+      var title = card.querySelector('strong').innerText;
+      img.src = src;
+      cap.innerText = title;
+      lightbox.style.display = 'flex';
+      void lightbox.offsetWidth;
+      lightbox.style.opacity = '1';
     });
+  });
 
-    menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') closeMenu();
-    });
-  })();
+  lightbox.addEventListener('click', function() {
+    lightbox.style.opacity = '0';
+    setTimeout(function() {
+      lightbox.style.display = 'none';
+      img.src = '';
+    }, 300);
+  });
+});
 </script>
-
-
-<script>
-  (() => {
-    const form = document.querySelector('#whatsapp-form');
-    if (!form) return;
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-
-      const data = new FormData(form);
-      const name = data.get('name')?.trim();
-      const company = data.get('company')?.trim() || 'No indicada';
-      const phone = data.get('phone')?.trim();
-      const email = data.get('email')?.trim() || 'No indicado';
-      const type = data.get('type')?.trim();
-      const city = data.get('city')?.trim() || 'No indicada';
-      const message = data.get('message')?.trim();
-
-      const text =
-`*NUEVO PROYECTO — TRAMÖBLER*
-
-*Cliente:* ${name}
-*Empresa:* ${company}
-*Teléfono / WhatsApp:* ${phone}
-*Correo:* ${email}
-*Tipo de proyecto:* ${type}
-*Ciudad:* ${city}
-
-*Detalle del proyecto:*
-${message}
-
-_Enviado desde el sitio web de Tramöbler._`;
-
-      const url = `https://wa.me/573107711789?text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank', 'noopener,noreferrer');
-    });
-  })();
-</script>
-
 </body>
 </html>
