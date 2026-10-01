@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tramöbler — Propuesta de sitio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Archivo+Expanded:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEAE3;
+    --paper-deep:#E1DDD3;
+    --ink:#1B1A17;
+    --ink-soft:#4a4841;
+    --concrete:#948E80;
+    --line: rgba(27,26,23,.20);
+    --line-soft: rgba(27,26,23,.10);
+    --blueprint:#1E4D8C;
+    --blueprint-deep:#12325C;
+    --wood:#B8813F;
+    --radius: 2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 12% -6%, rgba(30,77,140,.05), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 15%, rgba(184,129,63,.05), transparent 55%),
+      repeating-linear-gradient(0deg, var(--line-soft) 0 1px, transparent 1px 96px),
+      repeating-linear-gradient(90deg, var(--line-soft) 0 1px, transparent 1px 96px),
+      repeating-linear-gradient(103deg, rgba(120,110,90,.025) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(13deg, rgba(120,110,90,.018) 0 1px, transparent 1px 11px),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Archivo', sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    position:relative;
+  }
+  /* paper grain overlay */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:999;
+    opacity:.10;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:140px 140px;
+    animation:paperGrain .7s steps(2) infinite;
+  }
+  /* segunda capa de veteado sutil a otra escala, para dar profundidad */
+  body::after{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:998;
+    opacity:.045;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E");
+    animation:paperDrift 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes paperGrain{
+    0%{transform:translate(0,0)}
+    25%{transform:translate(-1%,1%)}
+    50%{transform:translate(1%,-1%)}
+    75%{transform:translate(1%,1%)}
+    100%{transform:translate(-1%,-1%)}
+  }
+  @keyframes paperDrift{
+    from{transform:scale(1) translate3d(0,0,0)}
+    to{transform:scale(1.08) translate3d(-1.5%,1%,0)}
+  }
+  h1,h2,h3{font-family:'Archivo Expanded', sans-serif; margin:0; letter-spacing:-0.01em;}
+  p{margin:0;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  @media(max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* ---- registration / sheet marks ---- */
+  .sheet{position:relative; border-top:1px solid var(--line);}
+  .sheet::before, .sheet::after{
+    content:""; position:absolute; width:14px; height:14px; top:-7px;
+    background:
+      linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat,
+      linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat;
+    opacity:.55;
+  }
+  .sheet::before{left:32px;}
+  .sheet::after{right:32px;}
+  .sheet-tag{
+    position:absolute; top:22px; right:32px;
+    font-size:11px; letter-spacing:.08em; color:var(--ink-soft);
+    text-align:right;
+  }
+  @media(max-width:640px){ .sheet-tag{right:20px;} .sheet::after{right:20px;} .sheet::before{left:20px;} }
+
+  /* ---- nav ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(237,234,227,.90);
+    backdrop-filter:blur(12px) saturate(1.04);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 5px 22px rgba(27,26,23,.045);
+  }
+
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    min-height:72px; padding:12px 32px; gap:28px;
+  }
+
+  .brand{
+    font-family:'Archivo Expanded'; font-weight:700; font-size:19px;
+    letter-spacing:.01em; text-decoration:none; line-height:1;
+    position:relative; flex-shrink:0;
+  }
+  .brand span{color:var(--blueprint);}
+  .brand::after{
+    content:""; display:block; width:30px; height:2px;
+    margin-top:7px; background:var(--blueprint);
+    transform-origin:left;
+    animation:brandLine 3.2s ease-in-out infinite;
+  }
+
+  .main-nav{
+    display:flex; align-items:center; justify-content:center;
+    margin-left:auto;
+  }
+
+  .main-nav ul{
+    list-style:none; display:flex; align-items:center; gap:3px;
+    margin:0; padding:4px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.24);
+  }
+
+  .main-nav li{margin:0; padding:0;}
+
+  .main-nav a{
+    display:block; position:relative;
+    padding:8px 13px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    font-size:13px; font-weight:500;
+    transition:color .22s ease, background .22s ease, transform .22s ease;
+  }
+
+  .main-nav a::after{
+    content:""; position:absolute;
+    left:13px; right:13px; bottom:4px;
+    height:1px; background:currentColor;
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .22s ease;
+  }
+
+  .main-nav a:hover,
+  .main-nav a:focus-visible{
+    color:var(--ink);
+    background:rgba(27,26,23,.07);
+  }
+
+  .main-nav a:hover::after,
+  .main-nav a:focus-visible::after{transform:scaleX(1);}
+
+  .nav-cta{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12px; font-weight:600;
+    letter-spacing:.04em;
+    padding:10px 15px;
+    border:1px solid var(--ink);
+    text-decoration:none;
+    white-space:nowrap;
+    transition:background .22s ease, color .22s ease, transform .22s ease;
+  }
+
+  .nav-cta::after{
+    content:"↗";
+    font-size:14px;
+    transition:transform .22s ease;
+  }
+
+  .nav-cta:hover{
+    background:var(--ink);
+    color:var(--paper);
+    transform:translateY(-1px);
+  }
+  .nav-cta:hover::after{transform:translate(2px,-2px);}
+
+  .menu-toggle{
+    display:none;
+    width:44px; height:42px;
+    padding:0;
+    border:1px solid var(--ink);
+    background:transparent;
+    color:var(--ink);
+    cursor:pointer;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:5px;
+  }
+
+  .menu-toggle span{
+    display:block;
+    width:18px; height:1px;
+    background:currentColor;
+    transition:transform .25s ease, opacity .2s ease;
+  }
+
+  .mobile-menu{
+    display:none;
+  }
+
+  header::after{
+    content:""; position:absolute; left:0; right:0; bottom:-1px;
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--blueprint), var(--wood), transparent);
+    background-size:200% 100%;
+    animation:headerScan 6s linear infinite;
+    opacity:.65;
+  }
+
+  @keyframes brandLine{
+    0%,100%{transform:scaleX(.75); opacity:.55}
+    50%{transform:scaleX(1.25); opacity:1}
+  }
+
+  @keyframes headerScan{
+    from{background-position:100% 0}
+    to{background-position:-100% 0}
+  }
+
+  @media(max-width:820px){
+    .nav{
+      min-height:64px;
+      padding:10px 20px;
+    }
+
+    .main-nav,
+    .nav > .nav-cta{display:none;}
+
+    .menu-toggle{display:flex;}
+
+    .mobile-menu{
+      position:absolute;
+      top:100%;
+      left:0; right:0;
+      display:block;
+      max-height:0;
+      overflow:hidden;
+      opacity:0;
+      pointer-events:none;
+      background:rgba(237,234,227,.98);
+      border-bottom:1px solid transparent;
+      transition:max-height .35s ease, opacity .25s ease, border-color .25s ease;
+    }
+
+    .mobile-menu.open{
+      max-height:420px;
+      opacity:1;
+      pointer-events:auto;
+      border-bottom-color:var(--line);
+      box-shadow:0 12px 28px rgba(27,26,23,.08);
+    }
+
+    .mobile-menu-inner{
+      padding:10px 20px 18px;
+    }
+
+    .mobile-menu a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:15px 2px;
+      border-bottom:1px solid var(--line-soft);
+      text-decoration:none;
+      font-size:16px;
+      color:var(--ink);
+    }
+
+    .mobile-menu a::after{
+      content:"↗";
+      color:var(--blueprint);
+      font-size:16px;
+    }
+
+    .mobile-menu .mobile-cta{
+      margin-top:12px;
+      padding:13px 14px;
+      border:1px solid var(--ink);
+      background:var(--ink);
+      color:var(--paper);
+      justify-content:center;
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:.04em;
+    }
+
+    .mobile-menu .mobile-cta::after{content:"→"; color:inherit;}
+
+    .menu-toggle.active span:first-child{
+      transform:translateY(3px) rotate(45deg);
+    }
+    .menu-toggle.active span:nth-child(2){
+      opacity:0;
+    }
+    .menu-toggle.active span:last-child{
+      transform:translateY(-9px) rotate(-45deg);
+    }
+  }
+
+  @media(max-width:420px){
+    .nav{padding-left:16px; padding-right:16px;}
+    .mobile-menu-inner{padding-left:16px; padding-right:16px;}
+    .brand{font-size:17px;}
+  }
+
+  /* ---- HERO / A-01 ---- */
+  .hero{
+    background:var(--blueprint-deep);
+    color:var(--paper);
+    position:relative;
+    overflow:hidden;
+    border-top:1px solid var(--line);
+  }
+  .hero-grid{
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(237,234,227,.09) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(90deg, rgba(237,234,227,.09) 0 1px, transparent 1px 64px);
+    opacity:.7;
+  }
+  .hero .wrap{position:relative; padding-top:64px; padding-bottom:56px;}
+  .hero-top{display:flex; justify-content:space-between; align-items:flex-start; font-size:12px; letter-spacing:.08em; color:rgba(237,234,227,.65); margin-bottom:52px;}
+  .hero-top .r{text-align:right;}
+  .hero-body{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center;}
+  .hero h1{font-size:clamp(34px,5vw,58px); font-weight:700; line-height:1.04; margin-bottom:22px;}
+  .hero h1 em{font-style:normal; color:#7FB1E8;}
+  .hero p.lead{font-size:17px; max-width:46ch; color:rgba(237,234,227,.82); margin-bottom:30px;}
+  .cta-row{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--paper); color:var(--ink); text-decoration:none;
+    padding:14px 22px; font-size:14px; font-weight:600; letter-spacing:.02em;
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .btn-primary:hover{background:#7FB1E8;}
+  .btn-ghost{color:var(--paper); text-decoration:none; font-size:14px; border-bottom:1px solid rgba(237,234,227,.5); padding-bottom:2px;}
+  .scalebar{display:flex; align-items:center; gap:6px; margin-top:50px; font-size:11px; color:rgba(237,234,227,.6); letter-spacing:.05em;}
+  .scalebar .ticks{display:flex; height:8px; border-left:1px solid rgba(237,234,227,.5); border-right:1px solid rgba(237,234,227,.5);}
+  .scalebar .ticks div{width:26px; border-right:1px solid rgba(237,234,227,.4);}
+  .scalebar .ticks div:nth-child(odd){background:rgba(237,234,227,.35);}
+
+  /* isometric stand illustration */
+  .iso-wrap{display:flex; justify-content:center;}
+  .iso svg{width:100%; max-width:460px; height:auto; overflow:visible;}
+  .iso path, .iso line{ vector-effect:non-scaling-stroke; }
+  .draw{ stroke-dasharray: 900; stroke-dashoffset:900; animation: draw 2.2s ease forwards; }
+  .draw2{ stroke-dasharray: 900; stroke-dashoffset:900; animation: draw 2.2s ease .3s forwards; }
+  .draw3{ stroke-dasharray: 900; stroke-dashoffset:900; animation: draw 2.2s ease .6s forwards; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @media(max-width:900px){ .hero-body{grid-template-columns:1fr;} .iso-wrap{order:-1;} }
+
+  /* ---- MANIFESTO / title block ---- */
+  .manifesto{padding:80px 0 70px; position:relative;}
+  .tblock{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line); margin-bottom:44px; font-size:11.5px; letter-spacing:.06em; color:var(--ink-soft);
+  }
+  .tblock div{padding:12px 16px; border-right:1px solid var(--line);}
+  .tblock div:last-child{border-right:none;}
+  .tblock b{display:block; color:var(--ink); font-size:12.5px; letter-spacing:0; margin-top:3px; font-weight:600;}
+  @media(max-width:760px){ .tblock{grid-template-columns:1fr 1fr;} }
+  .manifesto-text{display:grid; grid-template-columns:.55fr 1fr; gap:48px;}
+  .manifesto-text h2{font-size:clamp(26px,3.4vw,36px); line-height:1.15;}
+  .manifesto-text .col p{font-size:16.5px; color:var(--ink-soft); max-width:56ch; margin-bottom:16px;}
+  @media(max-width:760px){ .manifesto-text{grid-template-columns:1fr;} }
+
+  /* ---- SERVICES / A-02 ---- */
+  .services{padding:80px 0 88px; background:var(--paper-deep);}
+  .services h2{font-size:clamp(24px,3vw,32px); margin-bottom:44px; max-width:20ch;}
+  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);}
+  .svc-card{background:var(--paper-deep); padding:26px 22px 28px; display:flex; flex-direction:column; gap:16px;}
+  .swatch{width:44px; height:44px; border:1px solid var(--ink); flex-shrink:0;}
+  .sw-concrete{background:repeating-linear-gradient(135deg, var(--ink) 0 1px, transparent 1px 6px), #cfc9bc;}
+  .sw-wood{background:
+      repeating-linear-gradient(89deg, rgba(27,26,23,.35) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(91deg, rgba(27,26,23,.15) 0 2px, transparent 2px 9px),
+      var(--wood);}
+  .sw-steel{background:
+      repeating-linear-gradient(45deg, var(--ink) 0 1px, transparent 1px 5px),
+      repeating-linear-gradient(-45deg, var(--ink) 0 1px, transparent 1px 5px),
+      #B9C3C9;}
+  .sw-paint{background: linear-gradient(180deg, #E3DFD5, #E3DFD5 60%, var(--blueprint) 60%, var(--blueprint));}
+  .svc-card h3{font-size:16.5px; font-weight:600; font-family:'Archivo'; letter-spacing:0;}
+  .svc-card p{font-size:14.5px; color:var(--ink-soft);}
+  .svc-num{font-size:11px; color:var(--concrete); letter-spacing:.05em;}
+  @media(max-width:900px){ .svc-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:560px){ .svc-grid{grid-template-columns:1fr;} }
+
+  /* ---- PROJECTS / A-03 ---- */
+  .projects{padding:84px 0 40px;}
+  .projects h2{font-size:clamp(24px,3vw,32px); margin-bottom:10px;}
+  .projects .sub{color:var(--ink-soft); font-size:15px; margin-bottom:40px; max-width:60ch;}
+  .proj-row{
+    display:grid; grid-template-columns:90px 1.3fr 1fr 1fr 90px;
+    gap:18px; align-items:center;
+    padding:22px 0; border-top:1px solid var(--line);
+    text-decoration:none; color:var(--ink);
+  }
+  .proj-row:last-child{border-bottom:1px solid var(--line);}
+  .proj-row .idx{font-size:12px; color:var(--concrete);}
+  .proj-row h3{font-size:21px; font-weight:700;}
+  .proj-row .meta{font-size:13.5px; color:var(--ink-soft);}
+  .proj-row .tag{
+    justify-self:start; font-size:11px; letter-spacing:.05em; color:var(--blueprint);
+    border:1px solid var(--blueprint); padding:4px 8px;
+  }
+  .proj-row .arrow{justify-self:end; font-size:20px; transition:transform .2s;}
+  .proj-row:hover .arrow{transform:translateX(4px);}
+  .proj-row:hover h3{color:var(--blueprint);}
+  @media(max-width:760px){
+    .proj-row{grid-template-columns:1fr; gap:6px; text-align:left;}
+    .proj-row .arrow{display:none;}
+  }
+
+
+  /* ---- PHOTO PORTFOLIO ---- */
+  .photo-grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:14px;
+    margin-top:34px;
+  }
+  .photo-card{
+    position:relative;
+    overflow:hidden;
+    min-height:270px;
+    background:var(--paper-deep);
+    border:1px solid var(--line);
+    text-decoration:none;
+    color:var(--paper);
+  }
+  .photo-card:nth-child(1){grid-column:span 7;}
+  .photo-card:nth-child(2){grid-column:span 5;}
+  .photo-card:nth-child(3){grid-column:span 5;}
+  .photo-card:nth-child(4){grid-column:span 7;}
+  .photo-card:nth-child(5){grid-column:span 4;}
+  .photo-card:nth-child(6){grid-column:span 4;}
+  .photo-card:nth-child(7){grid-column:span 4;}
+
+  .photo-card img{
+    width:100%; height:100%; min-height:270px;
+    display:block; object-fit:cover;
+    filter:saturate(.92);
+    transition:transform .6s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+  }
+  .photo-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 38%, rgba(0,0,0,.72));
+    pointer-events:none;
+  }
+  .photo-card:hover img{
+    transform:scale(1.045);
+    filter:saturate(1.08);
+  }
+  .photo-caption{
+    position:absolute; left:18px; right:18px; bottom:16px;
+    z-index:2;
+  }
+  .photo-caption small{
+    display:block; margin-bottom:4px;
+    color:rgba(237,234,227,.7);
+    font-size:10px; letter-spacing:.09em;
+  }
+  .photo-caption strong{
+    display:block;
+    font-family:'Archivo Expanded',sans-serif;
+    font-size:18px; line-height:1.05;
+  }
+
+  /* ---- CONTACT FORM ---- */
+  .contact-form{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field.full{grid-column:1/-1;}
+  .field label{
+    font-size:10px;
+    letter-spacing:.1em;
+    color:rgba(237,234,227,.5);
+  }
+  .field input,
+  .field select,
+  .field textarea{
+    width:100%;
+    border:1px solid rgba(237,234,227,.22);
+    border-radius:0;
+    background:rgba(237,234,227,.045);
+    color:var(--paper);
+    padding:13px 14px;
+    font:inherit;
+    font-size:14px;
+    outline:none;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .field select option{color:var(--ink);}
+  .field textarea{min-height:125px; resize:vertical;}
+  .field input::placeholder,
+  .field textarea::placeholder{color:rgba(237,234,227,.35);}
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus{
+    border-color:#7FB1E8;
+    background:rgba(127,177,232,.06);
+  }
+  .form-actions{
+    grid-column:1/-1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    margin-top:6px;
+  }
+  .wa-submit{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--paper);
+    background:var(--paper);
+    color:var(--ink);
+    padding:13px 18px;
+    font:600 13px 'Archivo',sans-serif;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .wa-submit:hover{
+    background:#7FB1E8;
+    border-color:#7FB1E8;
+    transform:translateY(-1px);
+  }
+  .wa-submit::after{content:"↗"; font-size:16px;}
+  .form-note{
+    max-width:45ch;
+    color:rgba(237,234,227,.45);
+    font-size:11px;
+    line-height:1.5;
+  }
+
+  @media(max-width:760px){
+    .photo-grid{grid-template-columns:1fr 1fr; gap:10px;}
+    .photo-card:nth-child(n){grid-column:span 1;}
+    .photo-card:first-child{grid-column:1/-1;}
+    .photo-card,
+    .photo-card img{min-height:210px;}
+    .photo-caption{left:12px; right:12px; bottom:12px;}
+    .photo-caption strong{font-size:15px;}
+    .contact-form{grid-template-columns:1fr;}
+    .field.full{grid-column:auto;}
+    .form-actions{
+      grid-column:auto;
+      align-items:flex-start;
+      flex-direction:column-reverse;
+    }
+    .wa-submit{width:100%; justify-content:center;}
+  }
+
+  /* ---- CLIENTS ---- */
+  .clients{padding:56px 0 84px;}
+  .clients .label{font-size:12px; letter-spacing:.08em; color:var(--concrete); margin-bottom:26px;}
+  .client-list{display:flex; flex-wrap:wrap; gap:10px 14px;}
+  .client-list span{
+    display:flex; align-items:center; justify-content:center;
+    min-width:130px; min-height:54px;
+    padding:8px 14px; border:1px solid var(--line);
+    color:var(--ink-soft); background:rgba(255,255,255,.18);
+  }
+  .client-list img{
+    max-width:112px; max-height:30px;
+    width:auto; height:auto; object-fit:contain;
+    filter:grayscale(1); opacity:.72;
+    transition:filter .2s ease, opacity .2s ease, transform .2s ease;
+  }
+  .client-list span:hover img{
+    filter:grayscale(0); opacity:1; transform:scale(1.04);
+  }
+
+  /* ---- CONTACT / A-05 ---- */
+  .contact{background:var(--ink); color:var(--paper); padding:90px 0 60px; position:relative;}
+  .contact h2{font-size:clamp(30px,5vw,54px); line-height:1.05; max-width:14ch; margin-bottom:36px;}
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  .contact-block{font-size:13px; letter-spacing:.05em; color:rgba(237,234,227,.55); margin-bottom:22px;}
+  .contact-block b{display:block; font-size:19px; letter-spacing:0; color:var(--paper); font-weight:600; margin-top:6px;}
+  .contact a.mail{text-decoration:none;}
+  .contact a.mail:hover b{color:#7FB1E8;}
+  @media(max-width:760px){ .contact-grid{grid-template-columns:1fr;} }
+
+  footer{background:var(--ink); color:rgba(237,234,227,.5); font-size:12px; padding:22px 0 30px; border-top:1px solid rgba(237,234,227,.12);}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      scroll-behavior:auto !important;
+      transition-duration:.01ms !important;
+    }
+  }
+
+  /*</style>
+</head>
+<body>
+<header>
+  <div class="nav wrap">
+    <a href="#" class="brand" style="display:flex; align-items:center; gap:10px;"><img src="assets/Tramobler_azl.png" alt="Tramobler" style="height:44px; width:auto; padding-top:4px;"></a>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      <ul>
+          <li><a href="index.html#inicio">Estudio</a></li>
+          <li><a href="index.html#manifiesto">Manifiesto</a></li>
+          <li><a href="index.html#servicios">Servicios</a></li>
+          <li><a href="index.html#proyectos">Proyectos</a></li>
+          <li><a href="impresion-y-corte.html">Producción</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <a class="nav-cta" href="#contacto">Hablemos</a>
+
+    <button class="menu-toggle" type="button"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-inner">
+          <a href="index.html#inicio">Estudio</a>
+          <a href="index.html#manifiesto">Manifiesto</a>
+          <a href="index.html#servicios">Servicios</a>
+          <a href="index.html#proyectos">Proyectos</a>
+          <a href="impresion-y-corte.html">Producción</a>
+          <a href="#contacto" class="mobile-cta">Hablemos</a>
+        </div>
+  </div>
+</header>
+<!-- HERO PARA SUBSITIO IMPRESIÓN -->
+<section class="hero-production" style="position:relative; min-height: 500px; display:flex; align-items:center; overflow:hidden; border-bottom: 1px solid var(--line); background: var(--ink);">
+    <!-- Imagen generada como fondo -->
+    <img src="assets/impresion_hero.jpg" alt="Producción e Impresión UV" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.4; mix-blend-mode: luminosity;">
+    
+    <div class="wrap" style="position:relative; z-index:2; text-align:center; padding: 80px 32px;">
+        <div style="font-family:'Archivo Expanded'; font-weight:700; color:#7FB1E8; letter-spacing:0.15em; font-size:13px; margin-bottom:16px;">TRAMÖBLER STUDIO</div>
+        <h1 style="font-size: clamp(36px, 5vw, 64px); line-height: 1.1; margin-bottom: 24px; color: var(--paper); text-shadow: 0 4px 24px rgba(0,0,0,0.5);">Impresión y<br>Centro de Producción</h1>
+        <p style="font-size: 18px; color: rgba(237,234,227,0.85); max-width: 56ch; margin: 0 auto;">Equipamiento tecnológico de última generación para materializar tus ideas publicitarias y arquitectónicas con la máxima precisión.</p>
+    </div>
+</section>
+
+<!-- SECCIÓN DE SERVICIOS (Tarjetas de diseño) -->
+<section class="services" style="background:var(--paper); padding: 90px 0;">
+  <div class="wrap">
+    
+    <!-- GRID DESTACADA -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;">
+      
+      <!-- ITEM 1 -->
+      <div style="background: var(--paper-deep); padding: 48px 36px; border-top: 4px solid var(--blueprint);">
+        <div style="font-size: 11px; color: var(--blueprint); letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700;">GRAN FORMATO</div>
+        <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--ink);">Plotter UV 3,20 mts</h3>
+        <p style="color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Tecnología de curado UV que garantiza colores vibrantes y durabilidad inigualable. Imprimimos hasta 3,20 metros de ancho en una sola pieza sobre lonas, vinilos, telas y sustratos rígidos.</p>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div style="background: var(--paper-deep); padding: 48px 36px; border-top: 4px solid var(--wood);">
+        <div style="font-size: 11px; color: var(--wood); letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700;">PRECISIÓN LÁSER</div>
+        <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--ink);">Corte Láser</h3>
+        <p style="color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Grabado y corte computarizado perfecto sobre materiales rígidos como acrílico, MDF, madera y cartón. Ideal para letras corpóreas, exhibidores premium y trofeos decorativos.</p>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div style="background: var(--paper-deep); padding: 48px 36px; border-top: 4px solid var(--concrete);">
+        <div style="font-size: 11px; color: var(--concrete); letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700;">ROTULACIÓN</div>
+        <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--ink);">Plotter de Corte</h3>
+        <p style="color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Corte milimétrico de vinilos adhesivos, esmerilados y reflectivos. Perfecto para gráficos vehiculares, señalización interior/exterior y decoración arquitectónica.</p>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div style="background: var(--paper-deep); padding: 48px 36px; border-top: 4px solid var(--ink);">
+        <div style="font-size: 11px; color: var(--ink); letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700;">DURABILIDAD</div>
+        <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--ink);">Laminado Térmico</h3>
+        <p style="color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Encapsula y protege tus impresiones gráficas contra el agua, rayones y decoloración por exposición a rayos solares, extendiendo significativamente su vida útil.</p>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div style="background: var(--paper-deep); padding: 48px 36px; border-top: 4px solid var(--blueprint-deep);">
+        <div style="font-size: 11px; color: var(--blueprint-deep); letter-spacing: 0.15em; margin-bottom: 16px; font-weight: 700;">ENSAMBLE</div>
+        <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--ink);">Termosellado</h3>
+        <p style="color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Proceso de unión de lonas mediante alta temperatura que crea costuras invisibles y ultrarresistentes, indispensables para vallas de gran tamaño y pendones gigantes.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ PRODUCCIÓN -->
+<section class="faq" style="padding: 80px 0; background: var(--paper-deep); border-top: 1px solid var(--line);">
+  <div class="wrap">
+    <h2 style="font-size:clamp(24px,3vw,32px); margin-bottom:44px;">Preguntas Frecuentes de Producción</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:24px;">
+      <div style="background:var(--paper); padding:30px; border:1px solid var(--line);">
+        <h4 style="font-weight:700; margin-bottom:12px; color:var(--blueprint-deep); font-size:16px;">¿Qué materiales imprimen en el Plotter UV?</h4>
+        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Podemos imprimir sobre casi cualquier sustrato flexible: lonas mate y brillantes, vinilos adhesivos, telas tensadas, backlights y materiales texturizados.</p>
+      </div>
+      <div style="background:var(--paper); padding:30px; border:1px solid var(--line);">
+        <h4 style="font-weight:700; margin-bottom:12px; color:var(--blueprint-deep); font-size:16px;">¿Cuál es el tamaño máximo de impresión?</h4>
+        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Nuestro plotter UV imprime hasta 3,20 metros de ancho continuos. Para formatos más grandes, utilizamos la técnica de termosellado para unir piezas de forma imperceptible.</p>
+      </div>
+      <div style="background:var(--paper); padding:30px; border:1px solid var(--line);">
+        <h4 style="font-weight:700; margin-bottom:12px; color:var(--blueprint-deep); font-size:16px;">¿Ofrecen servicio de instalación de vinilos?</h4>
+        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Sí, contamos con un equipo experto para el montaje e instalación de todos los gráficos que producimos, tanto en exteriores como en interiores.</p>
+      </div>
+      <div style="background:var(--paper); padding:30px; border:1px solid var(--line);">
+        <h4 style="font-weight:700; margin-bottom:12px; color:var(--blueprint-deep); font-size:16px;">¿Qué espesor cortan en láser?</h4>
+        <p style="color:var(--ink-soft); font-size:14px; line-height:1.6;">Dependiendo del material, podemos realizar cortes de precisión en acrílicos y MDF desde 2mm hasta 10mm de espesor, logrando cantos limpios y pulidos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact sheet" id="contacto">
+  <div class="sheet-tag" style="color:rgba(237,234,227,.5)">HOJA A—05<br>CONTACTO</div>
+  <div class="wrap">
+    <h2>¿Empezamos a construir tu próximo proyecto?</h2>
+
+    <div class="contact-grid">
+      <div>
+        <div class="contact-block">WHATSAPP<b>+57 310 771 1789</b></div>
+        <div class="contact-block">MERCADEO<b>mercadeo@tramobler.com</b></div>
+        <div class="contact-block">DISEÑO ARQUITECTÓNICO<b>diseno.arq@tramobler.com</b></div>
+      </div>
+      <div>
+        <div class="contact-block">UBICACIÓN<b>Bogotá, Colombia</b></div>
+        <div class="contact-block">ESCENARIOS<b>Corferias · Retail · Corporativo</b></div>
+      </div>
+    </div>
+
+    <form class="contact-form" id="whatsapp-form">
+      <div class="field">
+        <label for="wa-name">NOMBRE *</label>
+        <input id="wa-name" name="name" type="text" placeholder="Tu nombre" required>
+      </div>
+
+      <div class="field">
+        <label for="wa-company">EMPRESA</label>
+        <input id="wa-company" name="company" type="text" placeholder="Nombre de tu empresa">
+      </div>
+
+      <div class="field">
+        <label for="wa-phone">TELÉFONO / WHATSAPP *</label>
+        <input id="wa-phone" name="phone" type="tel" placeholder="300 000 0000" required>
+      </div>
+
+      <div class="field">
+        <label for="wa-email">CORREO</label>
+        <input id="wa-email" name="email" type="email" placeholder="correo@empresa.com">
+      </div>
+
+      <div class="field">
+        <label for="wa-type">TIPO DE PROYECTO *</label>
+        <select id="wa-type" name="type" required>
+          <option value="">Selecciona una opción</option>
+          <option>Arquitectura efímera / Stand</option>
+          <option>Espacio comercial / Oficina</option>
+          <option>Remodelación / Obra gris</option>
+          <option>Acabados / Obra blanca</option>
+          <option>Otro proyecto</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="wa-city">CIUDAD</label>
+        <input id="wa-city" name="city" type="text" placeholder="Bogotá, Medellín, etc.">
+      </div>
+
+      <div class="field full">
+        <label for="wa-message">CUÉNTANOS SOBRE EL PROYECTO *</label>
+        <textarea id="wa-message" name="message" placeholder="Evento, medidas aproximadas, fecha, necesidades, presupuesto estimado..." required></textarea>
+      </div>
+
+      <div class="field full">
+            <label>TIPO DE SERVICIO</label>
+            <select name="servicio">
+              <option value="stands">Diseño y Construcción de Stands</option>
+              <option value="impresion" selected>Producción (Impresión UV, Corte, Laminado)</option>
+              <option value="arquitectura">Espacios Comerciales / Retail</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-actions">
+        <div class="form-note">
+          Al enviar, se abrirá WhatsApp con el mensaje organizado para que el equipo comercial pueda entender rápidamente tu proyecto.
+        </div>
+        <button class="wa-submit" type="submit">Enviar proyecto por WhatsApp</button>
+      </div>
+    </form>
+  </div>
+</section><footer>
+  <div class="wrap">
+    <div>© 2026 Tramöbler</div>
+    <div>Propuesta de sitio — no es la versión final</div>
+  </div>
+</footer>
+</body>
+</html>
